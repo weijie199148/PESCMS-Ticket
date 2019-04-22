@@ -249,4 +249,8 @@ class Label {
         return \Model\Auth::check($auth);
     }
 
+    public function addons(){
+        return (new \Core\Plugin())->addonsButton();
+    }
+
 }
