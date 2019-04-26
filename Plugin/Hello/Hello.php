@@ -4,7 +4,8 @@ namespace Plugin\Hello;
 class Hello extends \Plugin\Plugin{
 
     public function index(){
-
+        echo 'ddd';
+        exit;
         $this->viewLayout(__DIR__, 'index');
     }
 
