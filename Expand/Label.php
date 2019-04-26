@@ -250,7 +250,7 @@ class Label {
     }
 
     public function addons(){
-        return (new \Core\Plugin())->addonsButton();
+        return (new \Core\Plugin\Plugin())->addonsButton();
     }
 
 }

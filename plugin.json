@@ -1,5 +1,11 @@
 {
-  "\\Plugin\\Hello\\Hello": {
+  "\\Hello\\Hello": {
+    "version" : "1.2.3",
+    "button": {
+      "index" : "TicketTicket_modelindex"
+    }
+  },
+  "\\Test\\Test": {
     "version" : "1.2.3",
     "button": {
       "index" : "TicketTicket_modelindex"

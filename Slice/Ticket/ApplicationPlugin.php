@@ -21,11 +21,12 @@ namespace Slice\Ticket;
 class ApplicationPlugin extends \Core\Slice\Slice{
 
     public function before() {
-        $name = $this->isG('n', '请提交插件名称');
-        $func = $this->isG('f', '请提交插件要调用的方法');
-        $plugin = "\Plugin\\{$name}";
 
-        (new $plugin)->$func();
+        $pluginName = $this->isG('n', '请提交插件名称');
+        $pluginFunc = $this->isG('f', '请提交插件名称');
+
+        $plugin = "\Plugin\\{$pluginName}";
+        (new $plugin)->{$pluginFunc}();
         exit;
     }
 
