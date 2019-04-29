@@ -24,8 +24,12 @@ class Hello extends PluginController implements PluginImplements {
      * 注册事件
      */
     public function register() {
-        (new \Core\Plugin())->registerButton('index');
-        (new \Core\Plugin())->registerButton('ccc');
+        (new \Core\Plugin\Plugin())->register($this, [
+            'button' => [
+                'index' => 'TicketTicket_modelindex',
+                'ccc' => 'TicketTicket_modelindex',
+            ]
+        ]);
     }
 
     public function enabled() {

@@ -27,7 +27,17 @@ class Plugin{
     /**
      * 生成要执行的JSON
      */
-    public function registerButton(){
+    public function register($class, $action){
+        $pluginJson = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
+
+        $pluginJson["\\".get_class($class)] = $action;
+
+        echo '<pre>';
+        print_r($pluginJson);
+        print_r(get_class($class));
+        echo '</pre>';
+        echo '<br/>';
+        exit;
 
     }
 

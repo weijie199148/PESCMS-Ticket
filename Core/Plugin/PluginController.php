@@ -7,7 +7,7 @@ namespace Core\Plugin;
  */
 class PluginController extends \Core\Controller\Controller {
 
-    protected $pluginPath = '';
+    protected $pluginPath = [];
     
     public function __init() {
         $this->getPluginPath();
@@ -32,7 +32,7 @@ class PluginController extends \Core\Controller\Controller {
             extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
         }
 
-        require "{$this->pluginPath}/view/{$file}.php";
+        require "{$this->pluginPath['view']}/view/{$file}.php";
     }
 
     protected function viewLayout($file, $layout = 'layout'){
@@ -42,7 +42,7 @@ class PluginController extends \Core\Controller\Controller {
         if (!empty(\Core\Func\CoreFunc::$param)) {
             extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
         }
-        $file = "{$this->pluginPath}view/{$file}.php";
+        $file = "{$this->pluginPath['view']}/view/{$file}.php";
         require THEME_PATH."/{$layout}.php";
     }
 
@@ -56,7 +56,9 @@ class PluginController extends \Core\Controller\Controller {
             throw new \Exception("获取插件地址失败");
         }
         $split = explode('\\', $pluginClass);
-        $this->pluginPath = PES_CORE."{$split[0]}/{$split[1]}";
+
+        $this->pluginPath['plugin'] = PES_CORE."{$split[0]}/{$split[1]}";
+        $this->pluginPath['view'] = PES_CORE."Public/{$split[0]}/{$split[1]}";
     }
 
 }
