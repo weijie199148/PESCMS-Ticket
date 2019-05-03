@@ -10,7 +10,6 @@ class Plugin{
     public function addonsButton(){
         $json = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
         foreach($json as $key => $item){
-            $key = "\Plugin{$key}";
             if(!$this->checkPluginFile(explode("\\", $key))){
                 continue;
             }
@@ -28,17 +27,34 @@ class Plugin{
      * 生成要执行的JSON
      */
     public function register($class, $action){
-        $pluginJson = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
+        $this->writePluginJson($class, $action);
+    }
 
-        $pluginJson["\\".get_class($class)] = $action;
+    /**
+     * 移除插件
+     */
+    public function remove($class){
+        $this->writePluginJson($class);
+    }
 
-        echo '<pre>';
-        print_r($pluginJson);
-        print_r(get_class($class));
-        echo '</pre>';
-        echo '<br/>';
-        exit;
+    /**
+     * 写入插件json
+     * @param $class 插件命名空间
+     * @param array $action 注册插件事件 | 空则表示删除
+     */
+    private function writePluginJson($class, $action = array()){
+        $pluginJsonFile = PES_CORE.'plugin.json';
+        $pluginJson = json_decode(file_get_contents($pluginJsonFile), true);
 
+        if(empty($action)){
+            unset($pluginJson["\\".get_class($class)]);
+        }else{
+            $pluginJson["\\".get_class($class)] = $action;
+        }
+
+        $fopen = fopen($pluginJsonFile, 'w+');
+        fwrite($fopen, json_encode($pluginJson, JSON_PRETTY_PRINT));
+        fclose($fopen);
     }
 
     /**
