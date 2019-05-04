@@ -7,7 +7,7 @@ namespace Core\Plugin;
  */
 class PluginController extends \Core\Controller\Controller {
 
-    protected $pluginPath = [];
+    public $pluginPath = [];
     
     public function __init() {
         $this->getPluginPath();

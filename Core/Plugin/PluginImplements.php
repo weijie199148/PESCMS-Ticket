@@ -22,12 +22,6 @@ interface PluginImplements{
     public function option();
 
     /**
-     * 注册插件需要注册那些方法
-     * @return mixed
-     */
-    public function register();
-
-    /**
      * 启用插件
      * @return mixed
      */
@@ -38,5 +32,11 @@ interface PluginImplements{
      * @return mixed
      */
     public function disabled();
+
+    /**
+     * 删除插件
+     * @return mixed
+     */
+    public function remove();
 
 }

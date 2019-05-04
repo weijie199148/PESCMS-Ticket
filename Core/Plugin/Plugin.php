@@ -5,7 +5,7 @@ namespace Core\Plugin;
 class Plugin{
 
     /**
-     * 执行的方法
+     * 插件按钮事件
      */
     public function addonsButton(){
         $json = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
@@ -24,16 +24,16 @@ class Plugin{
     }
 
     /**
-     * 生成要执行的JSON
+     * 注册插件
      */
     public function register($class, $action){
         $this->writePluginJson($class, $action);
     }
 
     /**
-     * 移除插件
+     * 注销插件
      */
-    public function remove($class){
+    public function unRegister($class){
         $this->writePluginJson($class);
     }
 
@@ -55,6 +55,33 @@ class Plugin{
         $fopen = fopen($pluginJsonFile, 'w+');
         fwrite($fopen, json_encode($pluginJson, JSON_PRETTY_PRINT));
         fclose($fopen);
+    }
+
+    /**
+     * 更新配置文件
+     * @param $obj
+     * @param $status
+     * @return $this 连贯操作进行插件事件注册和注销
+     * @todo 暂时只能更新状态，未来看需求补充优化更新配置信息
+     */
+    public function updateConfig($obj, $status){
+        $pluginConfigFile = $obj->pluginPath['plugin'].'/plugin.ini';
+
+        $config = parse_ini_file($pluginConfigFile, true);
+
+        $config['plugin']['status'] = $status;
+
+        $fopen = fopen($pluginConfigFile, 'w+');
+
+        foreach ($config as $name => $item){
+            fwrite($fopen, "[{$name}]\n");
+            foreach ($item as $key => $value){
+                fwrite($fopen, "{$key} = {$value}\n");
+            }
+        }
+        fclose($fopen);
+
+        return $this;
     }
 
     /**

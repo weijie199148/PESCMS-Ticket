@@ -35,17 +35,17 @@
                         <tr>
                             <td>
                                 <?= $value['name'] ?>
-                                <span class="am-badge am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '禁用中' ?></span>
+                                <span class="am-badge am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '未启用' ?></span>
                             </td>
                             <td><?= $value['info']['content'] ?></td>
                             <td>
                                 <?php if($value['info']['status'] == 'enabled'): ?>
-                                <a href="" class="am-badge am-badge-secondary am-radius">禁用</a>
+                                <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'disabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">禁用</a>
                                 <?php else: ?>
-                                <a href="" class="am-badge am-badge-secondary am-radius">启用</a>
+                                <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'enabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">启用</a>
                                 <?php endif; ?>
-                                <a href="" class="am-badge am-badge-warning am-radius">配置</a>
-                                <a href="" class="am-badge am-badge-danger am-radius">删除</a>
+                                <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
+                                <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius">删除</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
