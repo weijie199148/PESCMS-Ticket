@@ -3,8 +3,16 @@
         <div class="am-panel-bd">
             <div class="am-cf">
                 <div class="am-fl am-cf">
-                    <strong class="am-text-primary am-text-lg"><a href="<?= $label->url(GROUP .'-' . MODULE . '-' . ACTION); ?>">应用商店</a>
-                    </strong>
+                    <ol class="am-breadcrumb am-breadcrumb-slash am-margin-0 am-padding-0">
+                        <li>
+                            <strong class="am-text-default am-text-lg"><a href="<?= $label->url(GROUP .'-' . MODULE . '-index'); ?>"><?= $title ?></a>
+                            </strong>
+                        </li>
+                        <li>
+                            <strong class="am-text-primary am-text-lg"><a class="am-link-muted" href="<?= $label->url(GROUP .'-' . MODULE . '-local'); ?>">本地应用</a>
+                            </strong>
+                        </li>
+                    </ol>
                 </div>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
