@@ -82,6 +82,16 @@ class Label {
     }
 
     /**
+     * 插件URL快速生成
+     * @param array $param
+     * @param bool $filterHtmlSuffix
+     * @return type
+     */
+    public function pluginUrl(array $param, $filterHtmlSuffix = false){
+        return $this->url(GROUP.'-Application-Plugin', $param, $filterHtmlSuffix);
+    }
+
+    /**
      * 生成令牌
      */
     public function token() {

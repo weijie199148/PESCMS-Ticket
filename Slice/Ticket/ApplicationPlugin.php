@@ -25,6 +25,13 @@ class ApplicationPlugin extends \Core\Slice\Slice{
         $pluginName = $this->isG('n', '请提交插件名称');
         $pluginFunc = $this->isG('f', '请提交插件名称');
 
+        /**
+         * 插件初始化入口需要后台账号才运行访问
+         */
+        if(GROUP != 'Ticket' && explode('\\', $pluginName)[1] == 'Init'){
+            $this->_404();
+        }
+
         $plugin = "\Plugin\\{$pluginName}";
         (new $plugin)->{$pluginFunc}();
         exit;

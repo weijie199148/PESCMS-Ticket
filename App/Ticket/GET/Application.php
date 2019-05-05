@@ -34,7 +34,7 @@ class Application extends \Core\Controller\Controller {
                 $config = parse_ini_file($pluginConfigFile, true);
                 $plugin[$filename] = [
                     'name' => $filename,
-                    'index' => "{$filename}\\index",
+                    'index' => "{$filename}\\Init",
                     'info' => $config['plugin']
                 ];
             }

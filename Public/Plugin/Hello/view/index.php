@@ -1,1 +1,1 @@
-<a href="<?= $label->url('Test-test-test') ?>" class="am-btn am-btn-warning am-radius"><span class="am-icon-plus"></span> 测试按钮</a>
+<a href="<?= $label->pluginUrl(['n' => 'Hello\\Test', 'f' => 'index']) ?>" class="am-btn am-btn-warning am-radius"><span class="am-icon-plus"></span> 测试按钮</a>

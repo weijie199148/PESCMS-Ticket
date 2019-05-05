@@ -9,11 +9,6 @@ namespace Core\Plugin;
  */
 interface PluginImplements{
 
-    /**
-     * 插件默认入口
-     * @return mixed
-     */
-    public function index();
 
     /**
      * 插件配置选项

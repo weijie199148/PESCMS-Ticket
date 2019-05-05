@@ -46,13 +46,16 @@ class Plugin{
      * @param array $action 注册插件事件 | 空则表示删除
      */
     private function writePluginJson($class, $action = array()){
+
+        $className = is_object($class) ? "\\".get_class($class) : $class;
+
         $pluginJsonFile = PES_CORE.'plugin.json';
         $pluginJson = json_decode(file_get_contents($pluginJsonFile), true);
 
         if(empty($action)){
-            unset($pluginJson["\\".get_class($class)]);
+            unset($pluginJson[$className]);
         }else{
-            $pluginJson["\\".get_class($class)] = $action;
+            $pluginJson[$className] = $action;
         }
 
         $fopen = fopen($pluginJsonFile, 'w+');

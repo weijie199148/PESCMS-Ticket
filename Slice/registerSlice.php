@@ -164,7 +164,7 @@ $SLICE_ARRYR = [
     //注册系统设置 添加/编辑 提交的表单内容
     'TICKET-APPLICATION-PLUGIN' => [
         'any',
-        ['Ticket-Application-Plugin'],
+        [':g-Application-Plugin'],
         ['\Ticket\ApplicationPlugin']
     ],
 
