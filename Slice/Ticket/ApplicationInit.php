@@ -14,23 +14,16 @@
 namespace Slice\Ticket;
 
 /**
- * 插件切片
+ * 插件初始化切片
  * Class ApplicationPlugin
  * @package Slice\Ticket
  */
-class ApplicationPlugin extends \Core\Slice\Slice{
+class ApplicationInit extends \Core\Slice\Slice{
 
     public function before() {
 
         $pluginName = $this->isG('n', '请提交插件名称');
         $pluginFunc = $this->isG('f', '请提交插件名称');
-
-        /**
-         * 插件初始化入口是禁止访问
-         */
-        if(explode('\\', $pluginName)[1] == 'Init'){
-            $this->_404();
-        }
 
         $plugin = "\Plugin\\{$pluginName}";
         (new $plugin)->{$pluginFunc}();

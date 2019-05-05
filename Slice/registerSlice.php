@@ -161,11 +161,18 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleSetting']
     ],
 
-    //注册系统设置 添加/编辑 提交的表单内容
-    'TICKET-APPLICATION-PLUGIN' => [
+    //注册全局插件访问入口
+    'GLOBAL-APPLICATION-PLUGIN' => [
         'any',
         [':g-Application-Plugin'],
         ['\Ticket\ApplicationPlugin']
+    ],
+
+    //注册插件初始化入口
+    'TICKET-APPLICATION-Init' => [
+        'any',
+        ['Ticket-Application-Init'],
+        ['\Ticket\ApplicationInit']
     ],
 
 ];
