@@ -84,6 +84,25 @@ class Plugin{
         return $this;
     }
 
+
+    public function remove($obj){
+        $pluginConfigFile = $obj->pluginPath['plugin'].'/plugin.ini';
+        $config = parse_ini_file($pluginConfigFile, true);
+
+        $removePluginController = \Model\Extra::clearDirAllFile($obj->pluginPath['plugin'], $obj->pluginPath['plugin']);
+
+        if($removePluginController['status'] == 0){
+            return $removePluginController;
+        }
+
+        $removePluginView = \Model\Extra::clearDirAllFile($obj->pluginPath['view'], $obj->pluginPath['view']);
+        if($removePluginView['status'] == 0){
+            return $removePluginView;
+        }
+
+        return true;
+    }
+
     /**
      * 验证插件是否存在
      * @param $file

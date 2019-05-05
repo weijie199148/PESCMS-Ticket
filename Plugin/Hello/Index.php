@@ -12,10 +12,6 @@ class Index extends PluginController implements PluginImplements {
         $this->view('index');
     }
 
-    public function ccc(){
-        echo 'hello';
-    }
-
     public function option() {
         // TODO: Implement option() method.
     }
@@ -29,7 +25,6 @@ class Index extends PluginController implements PluginImplements {
         (new \Core\Plugin\Plugin())->updateConfig($this, 'enabled')->register($this, [
             'button' => [
                 'index' => 'TicketTicket_modelindex',
-                'ccc' => 'TicketTicket_modelindex',
             ]
         ]);
         $this->success('插件启用成功');
@@ -49,6 +44,14 @@ class Index extends PluginController implements PluginImplements {
      * @return mixed|void
      */
     public function remove(){
+        $plugin = new \Core\Plugin\Plugin();
+        $removeFile = $plugin->remove($this);
+        if($removeFile !== true){
+            $this->error("移除插件时出错! {$removeFile['msg']}");
+        }
+
+        $plugin->unRegister($this);
+
         $this->success('插件已被删除');
     }
 
