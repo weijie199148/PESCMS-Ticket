@@ -7,18 +7,21 @@ class Plugin{
     /**
      * 插件按钮事件
      */
-    public function addonsButton(){
+    public function button($type, $arguments){
         $json = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
+        if(empty($json) && !is_array($json)){
+            return false;
+        }
         foreach($json as $key => $item){
-            if(!$this->checkPluginFile(explode("\\", $key))){
+            if(!$this->checkPluginFile(explode("\\", $key)) || empty($item[$type]) ){
                 continue;
             }
             $obj[$key] = new $key();
-            foreach ($item['button'] as $action => $auth){
+            foreach ($item[$type] as $action => $auth){
                 if(strcmp($auth, GROUP.MODULE.ACTION) !== 0){
                     return false;
                 }
-                $obj[$key]->$action();
+                $obj[$key]->$action($arguments);
             }
         }
     }

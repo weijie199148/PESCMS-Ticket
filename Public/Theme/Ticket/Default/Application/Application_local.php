@@ -44,7 +44,11 @@
                                 <?php else: ?>
                                 <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'enabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">启用</a>
                                 <?php endif; ?>
+
+                                <?php if($value['info']['option'] == 1): ?>
                                 <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
+                                <?php endif; ?>
+
                                 <a href="<?= $label->url(GROUP.'-Application-Plugin', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius ajax-click ajax-dialog" msg="您确定要此删除插件吗?">删除</a>
                             </td>
                         </tr>

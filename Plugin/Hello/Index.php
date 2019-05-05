@@ -12,6 +12,10 @@ class Index extends PluginController implements PluginImplements {
         $this->view('index');
     }
 
+    public function opAnalyze($arguments){
+        $this->view('opAnalyze');
+    }
+
     public function option() {
         // TODO: Implement option() method.
     }
@@ -23,8 +27,11 @@ class Index extends PluginController implements PluginImplements {
      */
     public function enabled() {
         (new \Core\Plugin\Plugin())->updateConfig($this, 'enabled')->register($this, [
-            'button' => [
+            'addButton' => [
                 'index' => 'TicketTicket_modelindex',
+            ],
+            'opButton' => [
+                'opAnalyze' => 'TicketTicket_modelindex',
             ]
         ]);
         $this->success('插件启用成功');

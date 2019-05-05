@@ -35,12 +35,11 @@ class Label {
      * @return type
      */
     public function __call($name, $arguments) {
-        switch (strtolower($name)) {
-            case 'findproject':
-            case 'finduser':
-            case 'findgroup':
-            case 'finddepartment':
-                return $this->findContent($arguments['0'], $arguments['1'], $arguments['2']);
+        switch ($name) {
+            case 'addButton':
+            case 'opButton':
+                return (new \Core\Plugin\Plugin())->button($name, $arguments);
+                break;
             default :
                 return '不存在此方法';
         }
@@ -248,9 +247,4 @@ class Label {
     public function checkAuth($auth){
         return \Model\Auth::check($auth);
     }
-
-    public function addons(){
-        return (new \Core\Plugin\Plugin())->addonsButton();
-    }
-
 }
