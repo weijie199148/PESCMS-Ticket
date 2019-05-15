@@ -1,0 +1,1 @@
+<a href="<?= $label->pluginUrl(['n' => 'MailTemplate\\Index', 'f' => 'show']) ?>" class="am-btn am-btn-secondary am-radius"><span class="am-icon-television"></span> 切换邮件模板</a>
