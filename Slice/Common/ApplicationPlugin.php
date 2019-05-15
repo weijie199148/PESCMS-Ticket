@@ -11,7 +11,7 @@
  */
 
 
-namespace Slice\Ticket;
+namespace Slice\Common;
 
 /**
  * 插件切片
@@ -28,12 +28,24 @@ class ApplicationPlugin extends \Core\Slice\Slice{
         /**
          * 插件初始化入口是禁止访问
          */
-        if(explode('\\', $pluginName)[1] == 'Init'){
+        if(strcasecmp(trim(explode('\\', $pluginName)[1]), 'Init') == 0
+            && ACTION != 'Init'
+        ){
             $this->_404();
         }
 
-        $plugin = "\Plugin\\{$pluginName}";
-        (new $plugin)->{$pluginFunc}();
+        $pluginNameSpace = "\Plugin\\{$pluginName}";
+        $plugin = new $pluginNameSpace;
+
+        $config = (new \Core\Plugin\Plugin())->loadConfig($plugin);
+
+        //不在运行组则404
+        if(!in_array(GROUP, explode(',', $config['plugin']['GROUP']))){
+            $this->_404();
+        }
+
+        //运行插件
+        $plugin->{$pluginFunc}();
         exit;
     }
 

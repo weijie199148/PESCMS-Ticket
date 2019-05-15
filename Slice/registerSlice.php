@@ -165,14 +165,14 @@ $SLICE_ARRYR = [
     'GLOBAL-APPLICATION-PLUGIN' => [
         'any',
         [':g-Application-Plugin'],
-        ['\Ticket\ApplicationPlugin']
+        ['\Common\ApplicationPlugin']
     ],
 
     //注册插件初始化入口
     'TICKET-APPLICATION-Init' => [
         'any',
         ['Ticket-Application-Init'],
-        ['\Ticket\ApplicationInit']
+        ['\Common\ApplicationPlugin']
     ],
 
 ];

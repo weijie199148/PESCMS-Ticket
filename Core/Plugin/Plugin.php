@@ -73,7 +73,7 @@ class Plugin{
     public function updateConfig($obj, $status){
         $pluginConfigFile = $obj->pluginPath['plugin'].'/plugin.ini';
 
-        $config = parse_ini_file($pluginConfigFile, true);
+        $config = $this->loadConfig($obj);
 
         $config['plugin']['status'] = $status;
 
@@ -90,10 +90,13 @@ class Plugin{
         return $this;
     }
 
-
+    /**
+     * 删除插件
+     * @param $obj
+     * @return array|bool
+     */
     public function remove($obj){
-        $pluginConfigFile = $obj->pluginPath['plugin'].'/plugin.ini';
-        $config = parse_ini_file($pluginConfigFile, true);
+        $config = $this->loadConfig($obj);
 
         $removePluginController = \Model\Extra::clearDirAllFile($obj->pluginPath['plugin'], $obj->pluginPath['plugin']);
 
@@ -105,8 +108,17 @@ class Plugin{
         if($removePluginView['status'] == 0){
             return $removePluginView;
         }
-
         return true;
+    }
+
+    /**
+     * 读取插件配置信息
+     * @param $obj 插件对象
+     * @return array|bool
+     */
+    public function loadConfig($obj){
+        $pluginConfigFile = $obj->pluginPath['plugin'].'/plugin.ini';
+        return parse_ini_file($pluginConfigFile, true);
     }
 
     /**
