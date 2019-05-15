@@ -32,7 +32,7 @@ class Init extends PluginController implements PluginImplements {
      * @return mixed|void
      */
     public function disabled() {
-        (new \Core\Plugin\Plugin())->updateConfig($this, 'disabled')->unRegister($this);
+        (new \Core\Plugin\Plugin())->updateConfig($this, 'disabled')->unRegister('\\Plugin\\Hello\\index');
         $this->success('插件禁用成功');
     }
 
