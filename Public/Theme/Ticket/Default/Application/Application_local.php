@@ -28,6 +28,8 @@
                     <?php else: ?>
                         <tr>
                             <th>插件名称</th>
+                            <th>版本</th>
+                            <th>作者</th>
                             <th>描述</th>
                             <th>操作</th>
                         </tr>
@@ -35,7 +37,12 @@
                         <tr>
                             <td>
                                 <?= $value['name'] ?>
-                                <span class="am-badge am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '未启用' ?></span>
+                                <span class="am-badge am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '未启用' ?>
+                                </span>
+                            </td>
+                            <td><?= $value['info']['version'] ?></td>
+                            <td>
+                                <a href="<?= $value['info']['website'] ?>" target="_blank"><?= $value['info']['author'] ?></a>
                             </td>
                             <td><?= $value['info']['content'] ?></td>
                             <td>
