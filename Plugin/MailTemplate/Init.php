@@ -19,7 +19,11 @@ class Init extends PluginController implements PluginImplements {
      * @return mixed|void
      */
     public function enabled() {
-        (new \Core\Plugin\Plugin())->updateConfig($this, 'enabled')->register("\\Plugin\\MailTemplate\\index", [
+
+        $config = $this->loadConfig($this);
+        $config['plugin']['status'] = 'enabled';
+
+        (new \Core\Plugin\Plugin())->updateConfig($this, $config)->register("\\Plugin\\MailTemplate\\index", [
             'addButton' => [
                 'index' => 'TicketMail_templateindex',
             ],
@@ -32,7 +36,11 @@ class Init extends PluginController implements PluginImplements {
      * @return mixed|void
      */
     public function disabled() {
-        (new \Core\Plugin\Plugin())->updateConfig($this, 'disabled')->unRegister('\\Plugin\\MailTemplate\\index');
+
+        $config = $this->loadConfig($this);
+        $config['plugin']['status'] = 'disabled';
+
+        (new \Core\Plugin\Plugin())->updateConfig($this, $config)->unRegister('\\Plugin\\MailTemplate\\index');
         $this->success('插件禁用成功');
     }
 

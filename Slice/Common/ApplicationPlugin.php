@@ -21,20 +21,22 @@ namespace Slice\Common;
 class ApplicationPlugin extends \Core\Slice\Slice{
 
     public function before() {
-
         $pluginName = $this->isG('n', '请提交插件名称');
         $pluginFunc = $this->isG('f', '请提交插件名称');
+
+        $splitPluginName = explode('-', $pluginName);
 
         /**
          * 插件初始化入口是禁止访问
          */
-        if(strcasecmp(trim(explode('\\', $pluginName)[1]), 'Init') == 0
+        if(strcasecmp(trim($splitPluginName[1]), 'Init') == 0
             && ACTION != 'Init'
         ){
             $this->_404();
         }
 
-        $pluginNameSpace = "\Plugin\\{$pluginName}";
+        $pluginNameSpace = "\Plugin\\{$splitPluginName[0]}\\{$splitPluginName[1]}";
+
         $plugin = new $pluginNameSpace;
 
         $config = (new \Core\Plugin\Plugin())->loadConfig($plugin);

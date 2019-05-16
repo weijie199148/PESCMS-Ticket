@@ -61,4 +61,17 @@ class PluginController extends \Core\Controller\Controller {
         $this->pluginPath['view'] = PES_CORE."Public/{$split[0]}/{$split[1]}";
     }
 
+    /**
+     * 读取配置信息
+     * @param $obj
+     * @return array|bool
+     */
+    public function loadConfig($obj){
+        return (new \Core\Plugin\Plugin())->loadConfig($obj);
+    }
+
+    public function updateConfig($obj, $config){
+        return (new \Core\Plugin\Plugin())->updateConfig($obj, $config);
+    }
+
 }

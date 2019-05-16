@@ -68,14 +68,9 @@ class Plugin{
      * @param $obj
      * @param $status
      * @return $this 连贯操作进行插件事件注册和注销
-     * @todo 暂时只能更新状态，未来看需求补充优化更新配置信息
      */
-    public function updateConfig($obj, $status){
+    public function updateConfig($obj, $config){
         $pluginConfigFile = $obj->pluginPath['plugin'].'/plugin.ini';
-
-        $config = $this->loadConfig($obj);
-
-        $config['plugin']['status'] = $status;
 
         $fopen = fopen($pluginConfigFile, 'w+');
 
