@@ -36,7 +36,7 @@
                         <?php foreach($list as $key => $value): ?>
                         <tr>
                             <td>
-                                <?= $value['name'] ?>
+                                <?= $value['info']['name']  ?>
                                 <span class="am-badge am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '未启用' ?>
                                 </span>
                             </td>

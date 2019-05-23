@@ -11,6 +11,9 @@ class Application extends \Core\Controller\Controller {
      * 应用商店列表
      */
     public function index(){
+        $plugin = $this->getPluginList();
+
+        $this->assign('installed', json_encode(array_keys($plugin)));
         $this->assign('title', '应用商店');
         $this->layout();
     }
@@ -19,6 +22,16 @@ class Application extends \Core\Controller\Controller {
      * 本地插件
      */
     public function local(){
+        $this->assign('list', $this->getPluginList());
+        $this->assign('title', '本地应用');
+        $this->layout();
+    }
+
+    /**
+     * 获取插件列表
+     * @return mixed
+     */
+    private function getPluginList(){
         $pluginPath = PES_CORE.'Plugin/';
 
         $handler = opendir($pluginPath);
@@ -32,7 +45,8 @@ class Application extends \Core\Controller\Controller {
                 }
 
                 $config = parse_ini_file($pluginConfigFile, true);
-                $plugin[$filename] = [
+
+                $plugin[$config['plugin']['name']] = [
                     'name' => $filename,
                     'index' => "{$filename}-Init",
                     'info' => $config['plugin']
@@ -41,10 +55,8 @@ class Application extends \Core\Controller\Controller {
         }
         closedir($handler);
 
+        return $plugin;
 
-        $this->assign('list', $plugin);
-        $this->assign('title', '本地应用');
-        $this->layout();
     }
 
 }

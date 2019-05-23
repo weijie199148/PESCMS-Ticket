@@ -20,4 +20,5 @@
         </div>
     </div>
 </div>
-<script src="https://www.pescms.com/Theme/Api/App/1.0/pescms_app.js?mt=<?= time() ?>"></script>
+<div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
+<script src="http://www.pc.com/Theme/Api/App/1.0/pescms_app.js?mt=<?= time() ?>"></script>
