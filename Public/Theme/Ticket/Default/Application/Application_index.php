@@ -22,3 +22,16 @@
 </div>
 <div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
 <script src="http://www.pc.com/Theme/Api/App/1.0/pescms_app.js?mt=<?= time() ?>"></script>
+<script>
+    $(function(){
+        $('body').on('click', '.pes-plugin-install', function(){
+            var name = $(this).attr('data')
+            $.ajaxsubmit({
+                url:'<?= $label->url(GROUP.'-Application-install', ['method' => 'GET']) ?>',
+                data:{name:name}
+            }, function(){
+
+            })
+        })
+    })
+</script>

@@ -13,7 +13,7 @@ class Application extends \Core\Controller\Controller {
     public function index(){
         $plugin = $this->getPluginList();
 
-        $this->assign('installed', json_encode(array_keys($plugin)));
+        $this->assign('installed', json_encode(empty($plugin) ? [] :array_keys($plugin)));
         $this->assign('title', '应用商店');
         $this->layout();
     }
@@ -56,6 +56,45 @@ class Application extends \Core\Controller\Controller {
         closedir($handler);
 
         return $plugin;
+
+    }
+
+    /**
+     * 应用安装
+     */
+    public function install(){
+        $plugin = $this->isP('name', '请提交您要安装的应用');
+
+        $fileName = \Model\Extra::getOnlyNumber().'.zip';
+
+        $patchSave = APP_PATH.'Temp/'.$fileName;
+
+        $getFile = (new \Expand\cURL())->init("http://www.pc.com/?g=Api&m=Application&a=download&name={$plugin}", [], [
+            CURLOPT_HTTPHEADER => [
+                'X-Requested-With: XMLHttpRequest',
+                'Content-Type: application/json; charset=utf-8',
+                'Accept: application/json',
+            ]
+        ]);
+
+        if(empty($getFile)){
+            $this->error('获取应用出错');
+        }
+
+        $json = json_decode($getFile, true);
+        if(!empty($json)){
+            $this->error($json['msg']);
+        }
+
+        $download = fopen($patchSave, 'w');
+        fwrite($download, $getFile);
+        fclose($download);
+
+        (new \Expand\zip()) ->unzip($patchSave);
+
+        unlink($patchSave);
+
+        $this->success('应用安装完毕');
 
     }
 
