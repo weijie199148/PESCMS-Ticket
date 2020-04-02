@@ -56,7 +56,7 @@
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
                                 <?php endif; ?>
 
-                                <a href="javascript:;" class="am-badge am-badge-warning am-radius ajax-click ajax-dialog check-update am-hide" msg="请确保已备份本插件，更新过程存在出错的可能" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
+                                <a href="<?= $label->url(GROUP.'-Application-upgrade', ['name' => $value['info']['name'], 'version' => $value['info']['version'], 'enname' => $value['info']['enname'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius ajax-click ajax-dialog check-update am-hide" msg="请确保已备份本插件，更新过程存在出错的可能" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
 
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius ajax-click ajax-dialog" msg="您确定要此删除插件吗?">删除</a>
                             </td>
@@ -75,7 +75,7 @@
             var name = dom.attr('name');
             var version = dom.attr('version');
             $.ajax({
-                url: "http://www.pc.com/?g=Api&m=Application&a=download&check=1&name="+name+"&check_version="+version,
+                url: "http://www.pc.com/?g=Api&m=Application&a=download&project=5&check=1&name="+name+"&check_version="+version,
                 type: "GET",
                 dataType:'JSON',
                 success: function (data) {

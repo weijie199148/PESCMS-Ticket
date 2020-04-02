@@ -65,11 +65,59 @@ class Application extends \Core\Controller\Controller {
     public function install(){
         $plugin = $this->isP('name', '请提交您要安装的应用');
 
+        $this->downloadPlugin($plugin);
+
+        $this->success('应用安装完毕');
+
+    }
+
+    /**
+     * 升级应用
+     */
+    public function upgrade(){
+        $plugin = $this->isG('name', '请提交您要安装的应用');
+        $version = $this->isG('version', '请提交应用版本');
+        $enName = $this->isG('enname', '请提交应用的名称');
+
+        $pluginPatch = PES_CORE."/Plugin/{$enName}";
+
+        $getPluginInfo = parse_ini_file("{$pluginPatch}/plugin.ini", true);
+
+
+        if(strcmp($plugin, $getPluginInfo['plugin']['name']) !== 0 || strcmp($enName, $getPluginInfo['plugin']['enname']) !== 0 ){
+            $this->error('应用信息不一致，请检查提交信息');
+        }
+
+        //开始下载新版本和安装新版文件。
+        $this->downloadPlugin($plugin, $version);
+
+        //获取插件初始化类命名空间。
+        $pluginInitNameSpace = "\\Plugin\\{$enName}\\Init";
+        $pluginInit = new $pluginInitNameSpace();
+
+        //执行新版预设的升级动作。
+        $pluginInit->upgrade();
+
+        //确保插件启用状态与更新前一致。
+        $newConfig = $pluginInit->loadConfig($pluginInit);
+        $newConfig['plugin']['status'] = $getPluginInfo['plugin']['status'];
+        $pluginInit->updateConfig($pluginInit, $newConfig);
+
+        //@todo还差递归升级了~~！！
+
+    }
+
+    /**
+     * 下载应用解压
+     * @param $plugin
+     * @param string $version
+     */
+    private function downloadPlugin($plugin, $version = ''){
         $fileName = \Model\Extra::getOnlyNumber().'.zip';
 
         $patchSave = APP_PATH.'Temp/'.$fileName;
 
-        $getFile = (new \Expand\cURL())->init("http://www.pc.com/?g=Api&m=Application&a=download&name={$plugin}", [], [
+        $getFile = (new \Expand\cURL())->init("http://www.pc.com/?g=Api&m=Application&a=download&project=5&name={$plugin}&check_version={$version}", [], [
             CURLOPT_HTTPHEADER => [
                 'X-Requested-With: XMLHttpRequest',
                 'Content-Type: application/json; charset=utf-8',
@@ -98,9 +146,6 @@ class Application extends \Core\Controller\Controller {
         (new \Expand\zip()) ->unzip($patchSave);
 
         unlink($patchSave);
-
-        $this->success('应用安装完毕');
-
     }
 
 }

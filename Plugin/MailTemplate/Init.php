@@ -60,4 +60,11 @@ class Init extends PluginController implements PluginImplements {
         $this->success('插件已被删除');
     }
 
+    /**
+     * 升级插件
+     * @return mixed|void
+     */
+    public function upgrade(){
+    }
+
 }

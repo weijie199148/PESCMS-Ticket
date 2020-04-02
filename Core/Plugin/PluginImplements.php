@@ -34,4 +34,10 @@ interface PluginImplements{
      */
     public function remove();
 
+    /**
+     * 升级插件
+     * @return mixed
+     */
+    public function upgrade();
+
 }
