@@ -84,11 +84,7 @@
                     }
                 },
                 error:function(obj){
-                    var d = dialog({
-                        title: '提示',
-                        content: '检查插件更新时出错'
-                    })
-                    d.showModal();
+                    dom.attr('class', 'am-badge am-badge-warning am-radius').attr('href', 'javascript:;').html('检查更新失败');
                 }
             })
 

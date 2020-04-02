@@ -77,6 +77,7 @@ class Application extends \Core\Controller\Controller {
             ]
         ]);
 
+
         if(empty($getFile)){
             $this->error('获取应用出错');
         }
@@ -89,6 +90,10 @@ class Application extends \Core\Controller\Controller {
         $download = fopen($patchSave, 'w');
         fwrite($download, $getFile);
         fclose($download);
+
+        if(is_file($patchSave) == false){
+            $this->error('下载插件失败');
+        }
 
         (new \Expand\zip()) ->unzip($patchSave);
 
