@@ -79,7 +79,7 @@ class Application extends \Core\Controller\Controller {
         $version = $this->isG('version', '请提交应用版本');
         $enName = $this->isG('enname', '请提交应用的名称');
 
-        $pluginPatch = PES_CORE."/Plugin/{$enName}";
+        $pluginPatch = PES_CORE."Plugin/{$enName}";
 
         $getPluginInfo = parse_ini_file("{$pluginPatch}/plugin.ini", true);
 
@@ -104,27 +104,26 @@ class Application extends \Core\Controller\Controller {
         $pluginInit->updateConfig($pluginInit, $newConfig);
 
         //@todo还差递归升级了~~！！
+        $existNewVersion = $this->fetchPlugin($plugin, $newConfig['plugin']['version'], true);
+        if($existNewVersion['status'] == 200){
+            $this->success("{$plugin}插件执行自动升级中，请勿关闭本页面", $this->url(GROUP.'-Application-upgrade', ['name' => $plugin, 'version' => $newConfig['plugin']['version'], 'enname' => $enName, 'method' => 'GET'  ]));
+        }else{
+            $this->success("{$plugin}插件升级完成", $this->url(GROUP.'-Application-local'));
+        }
 
     }
 
     /**
      * 下载应用解压
-     * @param $plugin
-     * @param string $version
+     * @param $plugin 插件名称
+     * @param string $version 当前版本号
      */
     private function downloadPlugin($plugin, $version = ''){
         $fileName = \Model\Extra::getOnlyNumber().'.zip';
 
         $patchSave = APP_PATH.'Temp/'.$fileName;
 
-        $getFile = (new \Expand\cURL())->init("http://www.pc.com/?g=Api&m=Application&a=download&project=5&name={$plugin}&check_version={$version}", [], [
-            CURLOPT_HTTPHEADER => [
-                'X-Requested-With: XMLHttpRequest',
-                'Content-Type: application/json; charset=utf-8',
-                'Accept: application/json',
-            ]
-        ]);
-
+        $getFile = $this->fetchPlugin($plugin, $version);
 
         if(empty($getFile)){
             $this->error('获取应用出错');
@@ -146,6 +145,24 @@ class Application extends \Core\Controller\Controller {
         (new \Expand\zip()) ->unzip($patchSave);
 
         unlink($patchSave);
+    }
+
+    /**
+     * 获取插件信息
+     * @param $plugin 插件名称
+     * @param string $version 当前版本号
+     * @param bool $check 是否验证存在新版
+     * @return bool|string
+     */
+    private function fetchPlugin($plugin, $version = '', $check = false){
+        $result = (new \Expand\cURL())->init("http://www.pc.com/?g=Api&m=Application&a=download&project=5&name={$plugin}&check_version={$version}&check={$check}", [], [
+            CURLOPT_HTTPHEADER => [
+                'X-Requested-With: XMLHttpRequest',
+                'Content-Type: application/json; charset=utf-8',
+                'Accept: application/json',
+            ]
+        ]);
+        return $check == true ? json_decode($result, true) : $result;
     }
 
 }
