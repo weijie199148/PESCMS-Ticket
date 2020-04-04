@@ -75,7 +75,7 @@
             var name = dom.attr('name');
             var version = dom.attr('version');
             $.ajax({
-                url: "http://www.pc.com/?g=Api&m=Application&a=download&project=5&check=1&name="+name+"&check_version="+version,
+                url: "<?= PESCMS_URL ?>/?g=Api&m=Application&a=download&project=5&check=1&depend=<?= $system['version'] ?>&name="+name+"&check_version="+version,
                 type: "GET",
                 dataType:'JSON',
                 success: function (data) {

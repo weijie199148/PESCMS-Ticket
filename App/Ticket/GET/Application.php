@@ -125,13 +125,14 @@ class Application extends \Core\Controller\Controller {
 
         $getFile = $this->fetchPlugin($plugin, $version);
 
+
         if(empty($getFile)){
             $this->error('获取应用出错');
         }
 
-        $json = json_decode($getFile, true);
-        if(!empty($json)){
-            $this->error($json['msg']);
+        $convertResult = json_decode($getFile, true);
+        if(!empty($convertResult['msg'])){
+            $this->error($convertResult['msg']);
         }
 
         $download = fopen($patchSave, 'w');
@@ -142,7 +143,11 @@ class Application extends \Core\Controller\Controller {
             $this->error('下载插件失败');
         }
 
-        (new \Expand\zip()) ->unzip($patchSave);
+        $unzipResult = (new \Expand\zip()) ->unzip($patchSave);
+        if($unzipResult === false){
+            $this->error('解压应用插件出错！请稍后再试.');
+        }
+
 
         unlink($patchSave);
     }
@@ -155,7 +160,8 @@ class Application extends \Core\Controller\Controller {
      * @return bool|string
      */
     private function fetchPlugin($plugin, $version = '', $check = false){
-        $result = (new \Expand\cURL())->init("http://www.pc.com/?g=Api&m=Application&a=download&project=5&name={$plugin}&check_version={$version}&check={$check}", [], [
+        $system = \Core\Func\CoreFunc::$param['system'];
+        $result = (new \Expand\cURL())->init(PESCMS_URL."/?g=Api&m=Application&a=download&project=5&depend={$system['version']}&name={$plugin}&check_version={$version}&check={$check}", [], [
             CURLOPT_HTTPHEADER => [
                 'X-Requested-With: XMLHttpRequest',
                 'Content-Type: application/json; charset=utf-8',

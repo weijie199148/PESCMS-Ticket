@@ -21,7 +21,7 @@
     </div>
 </div>
 <div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
-<script src="http://www.pc.com/Theme/Api/App/1.0/pescms_app.js?mt=<?= time() ?>"></script>
+<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.0/pescms_app.js?mt=<?= time() ?>"></script>
 <script>
     $(function(){
         $('body').on('click', '.pes-plugin-install', function(){
