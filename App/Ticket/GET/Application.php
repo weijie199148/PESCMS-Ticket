@@ -161,13 +161,22 @@ class Application extends \Core\Controller\Controller {
      */
     private function fetchPlugin($plugin, $version = '', $check = false){
         $system = \Core\Func\CoreFunc::$param['system'];
-        $result = (new \Expand\cURL())->init(PESCMS_URL."/?g=Api&m=Application&a=download&project=5&depend={$system['version']}&name={$plugin}&check_version={$version}&check={$check}", [], [
+
+        $param = [
+            'project' => 5,
+            'depend' => $system['version'],
+            'name' => $plugin,
+            'check_version' => $version,
+            'check' => $check
+        ];
+
+        $result = (new \Expand\cURL())->init(PESCMS_URL."/?g=Api&m=Application&a=download", $param, [
             CURLOPT_HTTPHEADER => [
                 'X-Requested-With: XMLHttpRequest',
-                'Content-Type: application/json; charset=utf-8',
                 'Accept: application/json',
             ]
         ]);
+
         return $check == true ? json_decode($result, true) : $result;
     }
 

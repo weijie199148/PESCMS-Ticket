@@ -2,7 +2,7 @@
     <div class="am-panel am-panel-default">
         <div class="am-panel-bd">
             <div class="am-cf">
-                <div class="am-fl am-cf">
+                <div class="am-fl">
                     <ol class="am-breadcrumb am-breadcrumb-slash am-margin-0 am-padding-0">
                         <li>
                             <strong class="am-text-default am-text-lg"><a href="<?= $label->url(GROUP .'-' . MODULE . '-index'); ?>"><?= $title ?></a>
@@ -13,6 +13,9 @@
                             </strong>
                         </li>
                     </ol>
+                </div>
+                <div class="am-fr">
+                    <a href="javascript:;" class="am-btn am-btn-secondary am-btn-xs pes-login">登录</a>
                 </div>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />

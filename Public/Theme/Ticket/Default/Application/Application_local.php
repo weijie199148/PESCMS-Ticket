@@ -75,9 +75,20 @@
             var name = dom.attr('name');
             var version = dom.attr('version');
             $.ajax({
-                url: "<?= PESCMS_URL ?>/?g=Api&m=Application&a=download&project=5&check=1&depend=<?= $system['version'] ?>&name="+name+"&check_version="+version,
-                type: "GET",
+                url: "<?= PESCMS_URL ?>/?g=Api&m=Application&a=download",
+                data: {
+                    project:5,
+                    check:1,
+                    depend:'<?= $system['version'] ?>',
+                    name:name,
+                    check_version:version
+                },
+                type: "POST",
                 dataType:'JSON',
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
                 success: function (data) {
                     if(data.status == 200){
                         dom.removeClass('am-hide');
