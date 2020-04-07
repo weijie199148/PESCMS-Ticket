@@ -106,7 +106,7 @@ class Application extends \Core\Controller\Controller {
         //@todo还差递归升级了~~！！
         $existNewVersion = $this->fetchPlugin($plugin, $newConfig['plugin']['version'], true);
         if($existNewVersion['status'] == 200){
-            $this->success("{$plugin}插件执行自动升级中，请勿关闭本页面", $this->url(GROUP.'-Application-upgrade', ['name' => $plugin, 'version' => $newConfig['plugin']['version'], 'enname' => $enName, 'method' => 'GET'  ]));
+            $this->success("{$plugin}插件执行自动升级中，请勿关闭本页面", $this->url(GROUP.'-Application-upgrade', ['name' => $plugin, 'version' => $newConfig['plugin']['version'], 'enname' => $enName, 'appkey' => $this->g('appkey'), 'method' => 'GET'  ]));
         }else{
             $this->success("{$plugin}插件升级完成", $this->url(GROUP.'-Application-local'));
         }
@@ -167,7 +167,8 @@ class Application extends \Core\Controller\Controller {
             'depend' => $system['version'],
             'name' => $plugin,
             'check_version' => $version,
-            'check' => $check
+            'check' => $check,
+            'appkey' => $_REQUEST['appkey']
         ];
 
         $result = (new \Expand\cURL())->init(PESCMS_URL."/?g=Api&m=Application&a=download", $param, [

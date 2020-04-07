@@ -29,9 +29,10 @@
     $(function(){
         $('body').on('click', '.pes-plugin-install', function(){
             var name = $(this).attr('data')
+            var appkey = $('input[name=appkey]').val();
             $.ajaxsubmit({
                 url:'<?= $label->url(GROUP.'-Application-install', ['method' => 'GET']) ?>',
-                data:{name:name}
+                data:{name:name, appkey:appkey}
             }, function(){
 
             })

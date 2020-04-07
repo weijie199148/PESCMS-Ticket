@@ -74,6 +74,7 @@
             var dom = $(this)
             var name = dom.attr('name');
             var version = dom.attr('version');
+            var href = dom.attr('href');
             $.ajax({
                 url: "<?= PESCMS_URL ?>/?g=Api&m=Application&a=download",
                 data: {
@@ -91,6 +92,7 @@
                 },
                 success: function (data) {
                     if(data.status == 200){
+                        dom.attr('href', href+'&appkey='+data.appkey);
                         dom.removeClass('am-hide');
                     }
                 },
